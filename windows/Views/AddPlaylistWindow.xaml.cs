@@ -56,6 +56,13 @@ public partial class AddPlaylistWindow : Window
         }
     }
 
+    private void UseDemo_Click(object sender, RoutedEventArgs e)
+    {
+        TypeM3U.IsChecked = true;
+        UrlBox.Text = Demo.PlaylistUrl;
+        if (string.IsNullOrWhiteSpace(NameBox.Text)) NameBox.Text = Loc.T("demo_name");
+    }
+
     private async void Ok_Click(object sender, RoutedEventArgs e)
     {
         ErrorText.Visibility = Visibility.Collapsed;

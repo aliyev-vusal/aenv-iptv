@@ -45,6 +45,10 @@ dotnet run
 English, Azərbaycanca, Türkçe, Deutsch, Español. The system language is used on first start; it can be
 changed at any time from the 🌐 picker in the sidebar. All strings live in `Services/Loc.cs`.
 
+## First start
+The welcome screen offers **Add playlist** and **Try demo channels**. The demo adds six fictional channels,
+three short films and a programme guide (see `docs/demo`), so the app can be tried without a provider.
+
 ## Playback
 Double-click (or Enter on) a channel to play it **inside the main window**. The ← Back button, Esc or
 Backspace returns to the list with the last channel selected. Series open their seasons and episodes in

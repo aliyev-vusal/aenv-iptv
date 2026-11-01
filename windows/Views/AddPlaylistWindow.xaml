@@ -22,6 +22,11 @@
                 <Button DockPanel.Dock="Right" Style="{StaticResource FlatButton}" Content="{l:T file_btn}" Margin="8,0,0,0" Click="Browse_Click"/>
                 <TextBox x:Name="UrlBox" AutomationProperties.Name="{l:T playlist_url}" Style="{StaticResource DarkTextBox}"/>
             </DockPanel>
+            <TextBlock Margin="0,-6,0,10">
+                <Hyperlink Click="UseDemo_Click" Foreground="{StaticResource Accent}">
+                    <Run Text="{l:T use_demo}"/>
+                </Hyperlink>
+            </TextBlock>
             <TextBlock Text="{l:T epg_url}" Foreground="{StaticResource Muted}" Margin="0,0,0,4"/>
             <TextBox x:Name="EpgBox" AutomationProperties.Name="{l:T epg_url}" Style="{StaticResource DarkTextBox}" Margin="0,0,0,12"/>
         </StackPanel>

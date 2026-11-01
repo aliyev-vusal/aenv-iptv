@@ -213,6 +213,18 @@ public sealed class Loc : INotifyPropertyChanged
             "Der Server hat nicht rechtzeitig geantwortet. Bitte später erneut versuchen.",
             "El servidor no respondió a tiempo. Inténtalo más tarde."
         },
+        ["welcome_title"] = new[] { "AENV IPTV-yə xoş gəlmisiniz", "Welcome to AENV IPTV", "AENV IPTV'ye hoş geldiniz", "Willkommen bei AENV IPTV", "Bienvenido a AENV IPTV" },
+        ["welcome_text"] = new[]
+        {
+            "Öz pleylistinizi əlavə edin və ya tətbiqi demo kanallarımızla sınayın.",
+            "Add your own playlist, or try the app with our demo channels.",
+            "Kendi listenizi ekleyin veya uygulamayı demo kanallarımızla deneyin.",
+            "Fügen Sie Ihre eigene Playlist hinzu oder testen Sie die App mit unseren Demo-Sendern.",
+            "Añade tu propia lista o prueba la app con nuestros canales de demostración."
+        },
+        ["try_demo"] = new[] { "Demo kanalları sına", "Try demo channels", "Demo kanalları dene", "Demo-Sender testen", "Probar canales demo" },
+        ["use_demo"] = new[] { "Demo pleylistdən istifadə et", "Use the demo playlist", "Demo listesini kullan", "Demo-Playlist verwenden", "Usar la lista demo" },
+        ["demo_name"] = new[] { "AENV Demo", "AENV Demo", "AENV Demo", "AENV Demo", "AENV Demo" },
         ["tip_back"] = new[] { "Geri (Esc)", "Back (Esc)", "Geri (Esc)", "Zurück (Esc)", "Atrás (Esc)" },
         ["tip_prev"] = new[] { "Əvvəlki (↑)", "Previous (↑)", "Önceki (↑)", "Vorheriger (↑)", "Anterior (↑)" },
         ["tip_play"] = new[] { "Oynat / Pauza (Space)", "Play / Pause (Space)", "Oynat / Duraklat (Space)", "Wiedergabe / Pause (Leertaste)", "Reproducir / Pausa (Espacio)" },

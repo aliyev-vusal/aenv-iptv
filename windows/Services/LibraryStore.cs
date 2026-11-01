@@ -73,6 +73,16 @@ public class LibraryStore
         _ = RefreshAsync(p);
     }
 
+    /// <summary>Adds the AENV demo playlist (once) and returns it.</summary>
+    public Playlist AddDemo()
+    {
+        var existing = Playlists.FirstOrDefault(p => p.Url == Demo.PlaylistUrl);
+        if (existing != null) return existing;
+        var demo = new Playlist { Name = Loc.T("demo_name"), Type = SourceType.M3U, Url = Demo.PlaylistUrl };
+        Add(demo);
+        return demo;
+    }
+
     public void Remove(Playlist p)
     {
         Playlists.RemoveAll(x => x.Id == p.Id);

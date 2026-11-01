@@ -38,6 +38,13 @@ public class DemoContentTests
     }
 
     [Fact]
+    public void App_button_points_to_the_demo_playlist_in_this_repository()
+    {
+        Assert.Equal(Base + "aenv-demo.m3u", Aenv.Services.Demo.PlaylistUrl);
+        Assert.True(File.Exists(Local(Aenv.Services.Demo.PlaylistUrl)));
+    }
+
+    [Fact]
     public void Playlist_has_six_live_channels_and_three_movies()
     {
         var list = Playlist().Channels;

@@ -23,6 +23,7 @@
     <Compile Include="..\..\windows\Services\Http.cs" Link="App\Http.cs" />
     <Compile Include="..\..\windows\Services\DiskCache.cs" Link="App\DiskCache.cs" />
     <Compile Include="..\..\windows\Services\ChannelCache.cs" Link="App\ChannelCache.cs" />
+    <Compile Include="..\..\windows\Services\Demo.cs" Link="App\Demo.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -46,8 +46,8 @@ Version rule: every submission needs a higher version (`1.0.1`, `1.1.0`, …).
 | Submission options → Notes for certification | See below |
 
 **Notes for certification** (paste as is):
-> AENV IPTV is a media player only and does not include or link to any content. To test, choose
-> "Add playlist → M3U / XSPF URL" and enter:
+> AENV IPTV is a media player only and does not include or link to any content. To test, click
+> "Try demo channels" on the first screen (or "Add playlist → Use the demo playlist"). This loads
 > https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/aenv-demo.m3u
 > It contains six fictional demo channels with a programme guide and three short demo films, all generated
 > by the developer. Double-click a channel to play it; arrow keys switch channels; Esc returns to the list.

@@ -75,7 +75,6 @@ public partial class MainWindow : Window
         {
             RebuildSidebar();
             ReloadSource();
-            if (_store.Playlists.Count == 0) AddPlaylist_Click(this, new RoutedEventArgs());
             // Start-up uses cached lists when they are fresh: no burst of requests to the provider
             await _store.RefreshAllAsync(force: false);
         };
@@ -223,7 +222,11 @@ public partial class MainWindow : Window
 
         var loading = SelectedEntry?.Playlist is { } p && _store.Loading.Contains(p.Id);
         EmptyState.Visibility = _filtered.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-        EmptyText.Text = loading ? Loc.T("loading")
+        // First start: welcome screen with "Add playlist" and "Try demo channels"
+        var welcome = _store.Playlists.Count == 0;
+        WelcomeTitle.Visibility = WelcomeActions.Visibility = welcome ? Visibility.Visible : Visibility.Collapsed;
+        EmptyText.Text = welcome ? Loc.T("welcome_text")
+            : loading ? Loc.T("loading")
             : _source.Count == 0 && _selectedKey == "fav" ? Loc.T("empty_fav")
             : _source.Count == 0 && _selectedKey == "recent" ? Loc.T("empty_recent")
             : Loc.T("nothing_found");
@@ -359,6 +362,14 @@ public partial class MainWindow : Window
     }
 
     private void About_Click(object sender, RoutedEventArgs e) => new AboutWindow { Owner = this }.ShowDialog();
+
+    private void TryDemo_Click(object sender, RoutedEventArgs e)
+    {
+        var demo = _store.AddDemo();
+        _selectedKey = demo.Id.ToString();
+        RebuildSidebar();
+        ReloadSource(resetKind: true);
+    }
 
     private async void RefreshAll_Click(object sender, RoutedEventArgs e) => await _store.RefreshAllAsync();
 
