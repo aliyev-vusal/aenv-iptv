@@ -1,0 +1,39 @@
+AENV IPTV — END USER LICENSE AGREEMENT
+
+Copyright (c) 2026 Vusal Aliyev. All rights reserved.
+
+Please read this agreement before installing or using AENV IPTV ("the Software").
+By installing or using the Software you agree to these terms.
+
+1. LICENSE
+   You may install and use the Software free of charge on any number of devices
+   for personal, non-commercial purposes.
+
+2. RESTRICTIONS
+   You may not sell, rent or sublicense the Software, or distribute modified
+   copies of it, without prior written permission from the author.
+
+3. CONTENT
+   The Software is a media player only. It does not include, provide, sell or
+   recommend any channels, streams, playlists or other content. You are solely
+   responsible for the playlists and streams you add and for ensuring that you
+   have the right to access them in your country.
+
+4. THIRD-PARTY COMPONENTS
+   The Software includes third-party components (including LibVLC) that are
+   licensed under their own terms. See THIRD-PARTY-NOTICES.txt. Nothing in this
+   agreement limits your rights under those licenses.
+
+5. NO WARRANTY
+   The Software is provided "as is", without warranty of any kind, express or
+   implied, including but not limited to the warranties of merchantability,
+   fitness for a particular purpose and non-infringement.
+
+6. LIMITATION OF LIABILITY
+   To the extent permitted by applicable law, the author shall not be liable
+   for any damages arising from the use of, or inability to use, the Software.
+   Mandatory statutory liability (for example for intent or gross negligence)
+   remains unaffected.
+
+7. PRIVACY
+   See PRIVACY.txt for how the Software handles your data.

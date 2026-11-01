@@ -1,0 +1,12 @@
+# .NET
+windows/bin/
+windows/obj/
+windows/publish/
+windows/dist/
+*.user
+.vs/
+# Xcode
+apple/*.xcodeproj/
+apple/DerivedData/
+xcuserdata/
+.DS_Store

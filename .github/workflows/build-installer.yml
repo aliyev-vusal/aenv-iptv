@@ -1,0 +1,116 @@
+# Runs the test suite on every push / pull request and builds the Windows installer.
+# Manual build: Actions → "Build installer" → Run workflow.
+# Release: push a tag such as v1.2.0 → tests, installer, Store package and a GitHub Release are created.
+# Store package identity comes from repository variables STORE_IDENTITY_NAME, STORE_PUBLISHER
+# and STORE_PUBLISHER_DISPLAY_NAME (Settings → Secrets and variables → Actions → Variables).
+name: Build installer
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version (e.g. 1.0.0)"
+        default: "1.0.0"
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Run tests
+        run: dotnet test tests/AenvIPTV.Tests --logger "console;verbosity=normal"
+
+  build:
+    needs: test
+    # Installer only for manual runs and version tags; plain pushes just run the tests
+    if: github.event_name == 'workflow_dispatch' || github.ref_type == 'tag'
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: windows
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Inno Setup
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) { choco install innosetup -y --no-progress }
+
+      - name: Version
+        id: ver
+        shell: pwsh
+        run: |
+          $v = "${{ github.event.inputs.version }}"
+          if ("${{ github.ref_type }}" -eq "tag") { $v = "${{ github.ref_name }}".TrimStart("v") }
+          if (-not $v) { $v = "1.0.0" }
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Build installer
+        shell: pwsh
+        run: ./build-installer.ps1 -Version ${{ steps.ver.outputs.version }} -Url "${{ github.server_url }}/${{ github.repository }}" -NoExplorer
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AENV-IPTV-Setup-${{ steps.ver.outputs.version }}
+          path: windows/dist/*.exe
+
+      - name: Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: windows/dist/*.exe
+
+  msix:
+    needs: test
+    if: github.event_name == 'workflow_dispatch' || github.ref_type == 'tag'
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: windows
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Version
+        id: ver
+        shell: pwsh
+        run: |
+          $v = "${{ github.event.inputs.version }}"
+          if ("${{ github.ref_type }}" -eq "tag") { $v = "${{ github.ref_name }}".TrimStart("v") }
+          if (-not $v) { $v = "1.0.0" }
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Build MSIX
+        shell: pwsh
+        env:
+          ID_NAME: ${{ vars.STORE_IDENTITY_NAME }}
+          PUBLISHER: ${{ vars.STORE_PUBLISHER }}
+          PUBLISHER_NAME: ${{ vars.STORE_PUBLISHER_DISPLAY_NAME }}
+        run: |
+          $a = @{ Version = "${{ steps.ver.outputs.version }}" }
+          if ($env:ID_NAME)        { $a.IdentityName = $env:ID_NAME }
+          if ($env:PUBLISHER)      { $a.Publisher = $env:PUBLISHER }
+          if ($env:PUBLISHER_NAME) { $a.PublisherDisplayName = $env:PUBLISHER_NAME }
+          ./build-msix.ps1 @a
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AENV-IPTV-Store-${{ steps.ver.outputs.version }}
+          path: windows/dist/*.msix

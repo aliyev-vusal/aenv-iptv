@@ -1,0 +1,19 @@
+#EXTM3U url-tvg="https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/aenv-demo-epg.xml.gz"
+#EXTINF:-1 tvg-id="lumora.aenv" tvg-name="Lumora Nature" tvg-logo="https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/logos/lumora.png" group-title="Nature",Lumora Nature
+https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/live/lumora/index.m3u8
+#EXTINF:-1 tvg-id="kodo.aenv" tvg-name="Kodo Kids" tvg-logo="https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/logos/kodo.png" group-title="Kids",Kodo Kids
+https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/live/kodo/index.m3u8
+#EXTINF:-1 tvg-id="vexo.aenv" tvg-name="Vexo Sport" tvg-logo="https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/logos/vexo.png" group-title="Sport",Vexo Sport
+https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/live/vexo/index.m3u8
+#EXTINF:-1 tvg-id="orbita.aenv" tvg-name="Orbita Science" tvg-logo="https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/logos/orbita.png" group-title="Science",Orbita Science
+https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/live/orbita/index.m3u8
+#EXTINF:-1 tvg-id="melodi.aenv" tvg-name="Melodi Music" tvg-logo="https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/logos/melodi.png" group-title="Music",Melodi Music
+https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/live/melodi/index.m3u8
+#EXTINF:-1 tvg-id="pixeo.aenv" tvg-name="Pixeo Life" tvg-logo="https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/logos/pixeo.png" group-title="Discovery",Pixeo Life
+https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/live/pixeo/index.m3u8
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/posters/quiet-orbit.jpg" group-title="Movies · Sci-Fi",The Quiet Orbit
+https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/vod/quiet-orbit.mp4
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/posters/paper-lanterns.jpg" group-title="Movies · Drama",Paper Lanterns
+https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/vod/paper-lanterns.mp4
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/posters/tide-pool.jpg" group-title="Movies · Family",Tide Pool
+https://raw.githubusercontent.com/aliyev-vusal/aenv-iptv/main/docs/demo/vod/tide-pool.mp4

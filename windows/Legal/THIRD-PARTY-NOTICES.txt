@@ -1,0 +1,40 @@
+AENV IPTV — THIRD-PARTY NOTICES
+
+AENV IPTV uses the following third-party components. Each is the property of its
+respective authors and is used under the license stated below.
+
+--------------------------------------------------------------------------------
+LibVLC / VLC media player modules (VideoLAN.LibVLC.Windows)
+  Copyright (c) VideoLAN and VLC authors
+  License: GNU Lesser General Public License v2.1 or later (LGPL-2.1-or-later).
+           Some modules are licensed under the GNU General Public License v2
+           or later.
+  Source:  https://code.videolan.org/videolan/vlc
+  LibVLC is used as unmodified, dynamically loaded libraries (libvlc.dll,
+  libvlccore.dll and plugins in the "libvlc" folder). You may replace these
+  libraries with your own compatible build. The complete corresponding source
+  code is available at the address above or, on request, from the author.
+
+--------------------------------------------------------------------------------
+LibVLCSharp / LibVLCSharp.WPF
+  Copyright (c) VideoLAN and LibVLCSharp authors
+  License: GNU Lesser General Public License v2.1 or later
+  Source:  https://code.videolan.org/videolan/LibVLCSharp
+
+--------------------------------------------------------------------------------
+VirtualizingWrapPanel
+  Copyright (c) Sebastian Bäumlisberger
+  License: MIT
+  Source:  https://github.com/sbaeumlisberger/VirtualizingWrapPanel
+
+--------------------------------------------------------------------------------
+.NET Runtime and Windows Presentation Foundation
+  Copyright (c) .NET Foundation and Contributors
+  License: MIT
+  Source:  https://github.com/dotnet/runtime, https://github.com/dotnet/wpf
+
+--------------------------------------------------------------------------------
+The full texts of the LGPL-2.1, GPL-2.0 and MIT licenses are available at:
+  https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt
+  https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+  https://opensource.org/license/mit

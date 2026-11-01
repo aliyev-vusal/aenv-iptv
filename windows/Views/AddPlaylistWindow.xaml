@@ -1,0 +1,46 @@
+<Window x:Class="Aenv.Views.AddPlaylistWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:Aenv"
+        Icon="/Assets/AenvIPTV.ico"
+        Title="AENV IPTV" Width="520" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" Background="{StaticResource Panel}">
+    <StackPanel Margin="24">
+        <TextBlock x:Name="Header" Text="{l:T new_playlist}" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,16"/>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+            <RadioButton x:Name="TypeM3U" Style="{StaticResource ChipToggle}" GroupName="t" Content="{l:T type_m3u}" IsChecked="True" Checked="Type_Checked"/>
+            <RadioButton x:Name="TypeXtream" Style="{StaticResource ChipToggle}" GroupName="t" Content="{l:T type_xtream}" Checked="Type_Checked"/>
+        </StackPanel>
+
+        <TextBlock Text="{l:T name}" Foreground="{StaticResource Muted}" Margin="0,0,0,4"/>
+        <TextBox x:Name="NameBox" AutomationProperties.Name="{l:T name}" Style="{StaticResource DarkTextBox}" Margin="0,0,0,12"/>
+
+        <StackPanel x:Name="M3UPanel">
+            <TextBlock Text="{l:T playlist_url}" Foreground="{StaticResource Muted}" Margin="0,0,0,4"/>
+            <DockPanel Margin="0,0,0,12">
+                <Button DockPanel.Dock="Right" Style="{StaticResource FlatButton}" Content="{l:T file_btn}" Margin="8,0,0,0" Click="Browse_Click"/>
+                <TextBox x:Name="UrlBox" AutomationProperties.Name="{l:T playlist_url}" Style="{StaticResource DarkTextBox}"/>
+            </DockPanel>
+            <TextBlock Text="{l:T epg_url}" Foreground="{StaticResource Muted}" Margin="0,0,0,4"/>
+            <TextBox x:Name="EpgBox" AutomationProperties.Name="{l:T epg_url}" Style="{StaticResource DarkTextBox}" Margin="0,0,0,12"/>
+        </StackPanel>
+
+        <StackPanel x:Name="XtreamPanel" Visibility="Collapsed">
+            <TextBlock Text="{l:T server_hint}" Foreground="{StaticResource Muted}" Margin="0,0,0,4"/>
+            <TextBox x:Name="ServerBox" AutomationProperties.Name="{l:T server_hint}" Style="{StaticResource DarkTextBox}" Margin="0,0,0,12"/>
+            <TextBlock Text="{l:T username}" Foreground="{StaticResource Muted}" Margin="0,0,0,4"/>
+            <TextBox x:Name="UserBox" AutomationProperties.Name="{l:T username}" Style="{StaticResource DarkTextBox}" Margin="0,0,0,12"/>
+            <TextBlock Text="{l:T password}" Foreground="{StaticResource Muted}" Margin="0,0,0,4"/>
+            <PasswordBox x:Name="PassBox" AutomationProperties.Name="{l:T password}" Background="{StaticResource Card}" Foreground="{StaticResource Text}"
+                         CaretBrush="White" BorderBrush="#2E3440" Padding="8,6" Margin="0,0,0,12"/>
+        </StackPanel>
+
+        <TextBlock x:Name="ErrorText" Foreground="#F87171" TextWrapping="Wrap" Margin="0,0,0,8" Visibility="Collapsed"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource FlatButton}" Content="{l:T cancel}" IsCancel="True" Margin="0,0,8,0"/>
+            <Button x:Name="OkButton" Style="{StaticResource AccentButton}" Content="{l:T add}" IsDefault="True" Click="Ok_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

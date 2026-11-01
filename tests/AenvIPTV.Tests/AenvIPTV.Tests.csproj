@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Unit tests for the platform-independent parts of the Windows app.
+    The source files are linked (not referenced) so the tests run on any OS,
+    without the WPF desktop runtime.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Aenv.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\windows\Models\Models.cs" Link="App\Models.cs" />
+    <Compile Include="..\..\windows\Services\AppPaths.cs" Link="App\AppPaths.cs" />
+    <Compile Include="..\..\windows\Services\Loc.cs" Link="App\Loc.cs" />
+    <Compile Include="..\..\windows\Services\M3UParser.cs" Link="App\M3UParser.cs" />
+    <Compile Include="..\..\windows\Services\XtreamClient.cs" Link="App\XtreamClient.cs" />
+    <Compile Include="..\..\windows\Services\EpgService.cs" Link="App\EpgService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+</Project>

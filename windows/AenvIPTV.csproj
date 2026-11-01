@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>AenvIPTV</AssemblyName>
+    <RootNamespace>Aenv</RootNamespace>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>false</SelfContained>
+    <ApplicationIcon>Assets\AenvIPTV.ico</ApplicationIcon>
+
+    <!-- Shown in the file properties -->
+    <Version>1.0.0</Version>
+    <Product>AENV IPTV</Product>
+    <Company>Vusal Aliyev</Company>
+    <Copyright>© 2026 Vusal Aliyev</Copyright>
+    <AssemblyTitle>AENV IPTV</AssemblyTitle>
+    <Description>IPTV player for M3U, XSPF and Xtream Codes playlists</Description>
+
+    <!-- Keep build/installer folders out of the project -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);publish\**;dist\**;installer\**;packaging\**;msix\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\AenvIPTV.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Shipped next to the exe: shown from the About dialog, required for LGPL compliance -->
+    <Content Include="Legal\*.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- VLC engine: HLS, MPEG-TS, RTMP, RTSP, UDP, MMS, MKV, AVI ... -->
+    <PackageReference Include="LibVLCSharp.WPF" Version="3.9.1" />
+    <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.21" />
+    <!-- Virtualized grid for large lists (tens of thousands of items) -->
+    <PackageReference Include="VirtualizingWrapPanel" Version="2.1.1" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,45 @@
+name: AenvIPTV
+options:
+  bundleIdPrefix: com.vusal
+  developmentLanguage: en
+  deploymentTarget:
+    iOS: "17.0"
+    tvOS: "17.0"
+    macOS: "14.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  AenvIPTV:
+    type: application
+    supportedDestinations: [iOS, tvOS, macOS]
+    sources: [Sources]
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleDisplayName: AENV IPTV
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [en, az, tr, de, es]
+        UILaunchScreen: {}
+        UIBackgroundModes: [audio]
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+          NSAllowsArbitraryLoadsForMedia: true
+        LSApplicationCategoryType: public.app-category.entertainment
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.vusal.aenviptv
+        CODE_SIGN_ENTITLEMENTS: Sources/AenvIPTV.entitlements
+        "CODE_SIGN_ENTITLEMENTS[sdk=macosx*]": Sources/AenvIPTV-macOS.entitlements
+        ENABLE_PREVIEWS: YES
