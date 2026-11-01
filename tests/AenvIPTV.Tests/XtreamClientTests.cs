@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Aenv.Tests;
 
+[Collection("Http")]
 public class XtreamClientTests : IDisposable
 {
     private readonly FakeXtreamServer _srv = new();

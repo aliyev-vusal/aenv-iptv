@@ -25,6 +25,9 @@ public class LibraryStore
     public Dictionary<Guid, List<Channel>> Channels { get; } = new();
     public Dictionary<Guid, Dictionary<string, List<Programme>>> Guides { get; } = new();
     public HashSet<Guid> Loading { get; } = new();
+    /// <summary>Playlists whose last refresh failed, with the user-facing reason.</summary>
+    public Dictionary<Guid, string> Failed { get; } = new();
+    private readonly Dictionary<Guid, string?> _epgUrls = new();
 
     public event Action? Changed;
     public event Action<string>? Error;
@@ -41,6 +44,7 @@ public class LibraryStore
         var dir = AppPaths.DataDir;
         FilePath = AppPaths.LibraryFile;
         Load();
+        LoadCachedChannels();
 
         // Reload when another PC changes the file via OneDrive
         _watcher = new FileSystemWatcher(dir, "library.json") { NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size };
@@ -52,7 +56,8 @@ public class LibraryStore
                 await Task.Delay(500);
                 var before = Playlists.Select(p => p.Id).ToHashSet();
                 Load();
-                foreach (var p in Playlists.Where(p => !before.Contains(p.Id))) _ = RefreshAsync(p);
+                LoadCachedChannels();
+                foreach (var p in Playlists.Where(p => !before.Contains(p.Id))) await RefreshAsync(p, force: false);
                 Changed?.Invoke();
             });
         };
@@ -73,24 +78,52 @@ public class LibraryStore
         Playlists.RemoveAll(x => x.Id == p.Id);
         Channels.Remove(p.Id);
         Guides.Remove(p.Id);
+        Failed.Remove(p.Id);
+        ChannelCache.Remove(p.Id);
         Save();
         Changed?.Invoke();
     }
 
-    public async Task RefreshAsync(Playlist p)
+    /// <summary>Shows the last known channel lists immediately, before any network request.</summary>
+    private void LoadCachedChannels()
     {
+        foreach (var p in Playlists)
+        {
+            if (Channels.ContainsKey(p.Id) || ChannelCache.Load(p.Id) is not { } entry) continue;
+            foreach (var c in entry.Channels) c.PlaylistId = p.Id;
+            Channels[p.Id] = entry.Channels;
+            _epgUrls[p.Id] = entry.EpgUrl;
+        }
+    }
+
+    /// <summary>
+    /// Reloads a playlist. With <paramref name="force"/> = false (app start) a fresh cached list is used
+    /// without contacting the server. Errors only interrupt the user when they asked for the refresh or
+    /// when there is nothing cached to show; otherwise the playlist is marked with a warning badge.
+    /// </summary>
+    public async Task RefreshAsync(Playlist p, bool force = true)
+    {
+        if (Loading.Contains(p.Id)) return;
+
+        if (!force && Channels.ContainsKey(p.Id) && ChannelCache.IsFresh(p.Id))
+        {
+            await LoadGuideAsync(p.Id, p.EpgUrl ?? _epgUrls.GetValueOrDefault(p.Id), force: false);
+            return;
+        }
+
         Loading.Add(p.Id);
         Changed?.Invoke();
+        string? epg = p.EpgUrl;
+        var ok = false;
         try
         {
-            string? epg = p.EpgUrl;
             List<Channel> items;
             if (p.Type == SourceType.M3U)
             {
                 var uri = new Uri(p.Url);
                 var text = uri.IsFile
                     ? await File.ReadAllTextAsync(uri.LocalPath)
-                    : await Http.Client.GetStringAsync(uri);
+                    : await Http.GetStringAsync(p.Url);
                 var parsed = await Task.Run(() => M3UParser.Parse(text, p.Id));
                 items = parsed.Channels;
                 epg ??= parsed.EpgUrl;
@@ -102,30 +135,42 @@ public class LibraryStore
                 epg ??= client.EpgUrl;
             }
             Channels[p.Id] = items;
-            if (!string.IsNullOrWhiteSpace(epg)) _ = LoadGuideAsync(p.Id, epg);
+            _epgUrls[p.Id] = epg;
+            ChannelCache.Save(p.Id, items, epg);
+            Failed.Remove(p.Id);
+            ok = true;
         }
         catch (Exception ex)
         {
-            Error?.Invoke($"{p.Name}: {ex.Message}");
+            Failed[p.Id] = ex.Message;
+            if (force || !Channels.ContainsKey(p.Id)) Error?.Invoke($"{p.Name}: {ex.Message}");
         }
         finally
         {
             Loading.Remove(p.Id);
             Changed?.Invoke();
         }
+
+        // The guide is loaded after the channel list, not in parallel, to stay within provider limits
+        if (ok) await LoadGuideAsync(p.Id, epg, force);
     }
 
-    private async Task LoadGuideAsync(Guid id, string url)
+    private async Task LoadGuideAsync(Guid id, string? url, bool force)
     {
+        if (string.IsNullOrWhiteSpace(url)) return;
         try
         {
-            Guides[id] = await EpgService.LoadAsync(url);
+            Guides[id] = await EpgService.LoadAsync(url, force);
             Changed?.Invoke();
         }
         catch { /* the app works without EPG */ }
     }
 
-    public Task RefreshAllAsync() => Task.WhenAll(Playlists.ToList().Select(RefreshAsync));
+    /// <summary>Refreshes playlists one after another (never in parallel, see <see cref="Http"/>).</summary>
+    public async Task RefreshAllAsync(bool force = true)
+    {
+        foreach (var p in Playlists.ToList()) await RefreshAsync(p, force);
+    }
 
     // ---------- Favorites / history ----------
 

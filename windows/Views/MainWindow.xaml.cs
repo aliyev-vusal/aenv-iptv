@@ -17,6 +17,7 @@ public class SidebarEntry
     public string Glyph { get; init; } = "";
     public string Badge { get; init; } = "";
     public Playlist? Playlist { get; init; }
+    public string? Tip { get; init; }
 }
 
 public partial class MainWindow : Window
@@ -75,7 +76,8 @@ public partial class MainWindow : Window
             RebuildSidebar();
             ReloadSource();
             if (_store.Playlists.Count == 0) AddPlaylist_Click(this, new RoutedEventArgs());
-            await _store.RefreshAllAsync();
+            // Start-up uses cached lists when they are fresh: no burst of requests to the provider
+            await _store.RefreshAllAsync(force: false);
         };
     }
 
@@ -91,11 +93,13 @@ public partial class MainWindow : Window
         };
         foreach (var p in _store.Playlists)
         {
-            var badge = _store.Loading.Contains(p.Id) ? Loc.T("loading")
-                : _store.Channels.TryGetValue(p.Id, out var ch) ? ch.Count.ToString("N0") : "";
+            var count = _store.Channels.TryGetValue(p.Id, out var ch) ? ch.Count.ToString("N0") : "";
+            var failed = _store.Failed.TryGetValue(p.Id, out var reason);
+            var badge = _store.Loading.Contains(p.Id) ? Loc.T("loading") : failed ? $"⚠ {count}".Trim() : count;
             entries.Add(new SidebarEntry
             {
                 Key = p.Id.ToString(), Title = p.Name, Playlist = p, Badge = badge,
+                Tip = failed ? reason : null,
                 Glyph = p.Type == SourceType.Xtream ? "" : ""
             });
         }

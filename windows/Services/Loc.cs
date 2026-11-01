@@ -157,6 +157,62 @@ public sealed class Loc : INotifyPropertyChanged
         ["license"] = new[] { "Lisenziya", "License", "Lisans", "Lizenz", "Licencia" },
         ["third_party"] = new[] { "Üçüncü tərəf lisenziyaları", "Third-party notices", "Üçüncü taraf lisansları", "Lizenzen von Drittanbietern", "Avisos de terceros" },
         ["close"] = new[] { "Bağla", "Close", "Kapat", "Schließen", "Cerrar" },
+        ["http_too_many"] = new[]
+        {
+            "Server hazırda çox sorğu qəbul etmir (429). Bir neçə dəqiqə gözləyib yeniləyin. Çox provayder hesab başına yalnız bir bağlantıya icazə verir — eyni hesabı istifadə edən digər cihaz və ya tətbiqləri bağlayın.",
+            "The server is refusing requests for now (429 Too Many Requests). Wait a few minutes, then refresh. Many providers allow only one connection per account — close other devices or apps using the same account.",
+            "Sunucu şu anda istekleri kabul etmiyor (429). Birkaç dakika bekleyip yenileyin. Birçok sağlayıcı hesap başına yalnızca bir bağlantıya izin verir — aynı hesabı kullanan diğer cihaz veya uygulamaları kapatın.",
+            "Der Server lehnt derzeit Anfragen ab (429 – zu viele Anfragen). Warten Sie einige Minuten und aktualisieren Sie dann. Viele Anbieter erlauben nur eine Verbindung pro Konto – schließen Sie andere Geräte oder Apps mit demselben Konto.",
+            "El servidor rechaza solicitudes por ahora (429). Espera unos minutos y actualiza. Muchos proveedores permiten solo una conexión por cuenta: cierra otros dispositivos o apps que usen la misma cuenta."
+        },
+        ["http_denied"] = new[]
+        {
+            "Giriş rədd edildi. İstifadəçi adını, şifrəni və abunəliyin aktiv olduğunu yoxlayın.",
+            "Access denied. Check the username, password and that the subscription is active.",
+            "Erişim reddedildi. Kullanıcı adını, şifreyi ve aboneliğin aktif olduğunu kontrol edin.",
+            "Zugriff verweigert. Prüfen Sie Benutzername, Passwort und ob das Abonnement aktiv ist.",
+            "Acceso denegado. Comprueba el usuario, la contraseña y que la suscripción esté activa."
+        },
+        ["http_not_found"] = new[]
+        {
+            "Ünvan tapılmadı (404). Linki yoxlayın.",
+            "Address not found (404). Check the link.",
+            "Adres bulunamadı (404). Bağlantıyı kontrol edin.",
+            "Adresse nicht gefunden (404). Bitte den Link prüfen.",
+            "Dirección no encontrada (404). Comprueba el enlace."
+        },
+        ["http_server_error"] = new[]
+        {
+            "Serverdə xəta baş verdi ({0}). Bir az sonra yenidən cəhd edin.",
+            "The server reported an error ({0}). Try again later.",
+            "Sunucuda bir hata oluştu ({0}). Daha sonra tekrar deneyin.",
+            "Der Server hat einen Fehler gemeldet ({0}). Bitte später erneut versuchen.",
+            "El servidor informó de un error ({0}). Inténtalo más tarde."
+        },
+        ["http_other"] = new[]
+        {
+            "Server sorğunu qəbul etmədi ({0}).",
+            "The server did not accept the request ({0}).",
+            "Sunucu isteği kabul etmedi ({0}).",
+            "Der Server hat die Anfrage nicht angenommen ({0}).",
+            "El servidor no aceptó la solicitud ({0})."
+        },
+        ["http_network"] = new[]
+        {
+            "Serverə qoşulmaq mümkün olmadı. Ünvanı və internet bağlantınızı yoxlayın.",
+            "Could not connect to the server. Check the address and your internet connection.",
+            "Sunucuya bağlanılamadı. Adresi ve internet bağlantınızı kontrol edin.",
+            "Keine Verbindung zum Server. Prüfen Sie die Adresse und Ihre Internetverbindung.",
+            "No se pudo conectar con el servidor. Comprueba la dirección y tu conexión a internet."
+        },
+        ["http_timeout"] = new[]
+        {
+            "Server vaxtında cavab vermədi. Bir az sonra yenidən cəhd edin.",
+            "The server did not respond in time. Try again later.",
+            "Sunucu zamanında yanıt vermedi. Daha sonra tekrar deneyin.",
+            "Der Server hat nicht rechtzeitig geantwortet. Bitte später erneut versuchen.",
+            "El servidor no respondió a tiempo. Inténtalo más tarde."
+        },
         ["tip_back"] = new[] { "Geri (Esc)", "Back (Esc)", "Geri (Esc)", "Zurück (Esc)", "Atrás (Esc)" },
         ["tip_prev"] = new[] { "Əvvəlki (↑)", "Previous (↑)", "Önceki (↑)", "Vorheriger (↑)", "Anterior (↑)" },
         ["tip_play"] = new[] { "Oynat / Pauza (Space)", "Play / Pause (Space)", "Oynat / Duraklat (Space)", "Wiedergabe / Pause (Leertaste)", "Reproducir / Pausa (Espacio)" },

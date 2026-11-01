@@ -162,6 +162,7 @@ public class StoreReadinessTests
     [InlineData("DisableReadyPage=no")]
     [InlineData("DisableFinishedPage=no")]
     [InlineData("WizardStyle=modern")]
+    [InlineData("ShowLanguageDialog=yes")]
     [InlineData("PrivilegesRequiredOverridesAllowed=dialog")]
     [InlineData("CloseApplications=yes")]
     [InlineData("AppId={{85138C5C-CADA-431A-937F-39A2920022E4}")]   // never change: keeps upgrades working

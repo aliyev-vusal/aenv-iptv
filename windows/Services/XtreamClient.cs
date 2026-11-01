@@ -31,8 +31,12 @@ public class XtreamClient
 
     public async Task<List<Channel>> LoadAllAsync()
     {
-        var results = await Task.WhenAll(LoadAsync(ContentKind.Live), LoadAsync(ContentKind.Movie), LoadAsync(ContentKind.Series));
-        return results.SelectMany(r => r).ToList();
+        // One request at a time: many providers allow a single connection per account
+        // and answer parallel requests with 429 Too Many Requests.
+        var all = new List<Channel>();
+        foreach (var kind in new[] { ContentKind.Live, ContentKind.Movie, ContentKind.Series })
+            all.AddRange(await LoadAsync(kind));
+        return all;
     }
 
     public async Task<List<Channel>> LoadAsync(ContentKind kind)
@@ -43,16 +47,16 @@ public class XtreamClient
             ContentKind.Movie => ("get_vod_categories", "get_vod_streams"),
             _ => ("get_series_categories", "get_series")
         };
-        var catsTask = RequestAsync(catAction);
-        var itemsTask = RequestAsync(streamAction);
+        var catsNode = await RequestAsync(catAction);
+        var itemsNode = await RequestAsync(streamAction);
 
         var categories = new Dictionary<string, string>();
-        if (await catsTask is JsonArray cats)
+        if (catsNode is JsonArray cats)
             foreach (var c in cats)
                 if (Str(c?["category_id"]) is { } id) categories[id] = Str(c?["category_name"]) ?? Loc.T("other");
 
         var list = new List<Channel>();
-        if (await itemsTask is not JsonArray items) return list;
+        if (itemsNode is not JsonArray items) return list;
         var host = new Uri(_server).Host;
 
         foreach (var item in items)
@@ -127,7 +131,7 @@ public class XtreamClient
         var url = $"{_server}/player_api.php?username={Esc(_user)}&password={Esc(_pass)}";
         if (action != null) url += $"&action={action}";
         url += extra;
-        var json = await Http.Client.GetStringAsync(url);
+        var json = await Http.GetStringAsync(url);
         try { return JsonNode.Parse(json); }
         catch { throw new Exception(Loc.T("bad_response")); }
     }
@@ -142,17 +146,4 @@ public class XtreamClient
     }
 
     private static int? Int(JsonNode? n) => int.TryParse(Str(n), out var i) ? i : null;
-}
-
-public static class Http
-{
-    public static readonly HttpClient Client = CreateClient();
-
-    private static HttpClient CreateClient()
-    {
-        var handler = new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.All };
-        var c = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(60) };
-        c.DefaultRequestHeaders.UserAgent.ParseAdd("AENV-IPTV/1.0");
-        return c;
-    }
 }

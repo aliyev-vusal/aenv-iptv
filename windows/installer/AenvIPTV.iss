@@ -44,7 +44,9 @@ DisableProgramGroupPage=no
 DisableReadyPage=no
 DisableFinishedPage=no
 AllowNoIcons=yes
-ShowLanguageDialog=auto
+; Always ask for the language first, even when Windows already uses one of them
+ShowLanguageDialog=yes
+LanguageDetectionMethod=uilanguage
 WizardImageFile=images\wizard-100.bmp,images\wizard-125.bmp,images\wizard-150.bmp,images\wizard-200.bmp
 WizardSmallImageFile=images\wizard-small-100.bmp,images\wizard-small-125.bmp,images\wizard-small-150.bmp,images\wizard-small-200.bmp
 SetupIconFile=..\Assets\AenvIPTV.ico

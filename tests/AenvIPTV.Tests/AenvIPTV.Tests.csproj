@@ -20,6 +20,9 @@
     <Compile Include="..\..\windows\Services\M3UParser.cs" Link="App\M3UParser.cs" />
     <Compile Include="..\..\windows\Services\XtreamClient.cs" Link="App\XtreamClient.cs" />
     <Compile Include="..\..\windows\Services\EpgService.cs" Link="App\EpgService.cs" />
+    <Compile Include="..\..\windows\Services\Http.cs" Link="App\Http.cs" />
+    <Compile Include="..\..\windows\Services\DiskCache.cs" Link="App\DiskCache.cs" />
+    <Compile Include="..\..\windows\Services\ChannelCache.cs" Link="App\ChannelCache.cs" />
   </ItemGroup>
 
   <ItemGroup>

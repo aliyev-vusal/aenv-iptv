@@ -15,14 +15,40 @@ public static class EpgService
 {
     private static readonly ConcurrentDictionary<string, Dictionary<string, List<Programme>>> Cache = new();
 
-    public static async Task<Dictionary<string, List<Programme>>> LoadAsync(string url)
+    /// <summary>Guides are big and providers rate-limit them, so a downloaded guide is reused for this long.</summary>
+    public static TimeSpan MaxAge { get; set; } = TimeSpan.FromHours(12);
+
+    /// <summary>
+    /// Loads a guide: memory → fresh disk copy → download. If the download fails, an older disk copy
+    /// is used rather than showing no guide at all.
+    /// </summary>
+    public static async Task<Dictionary<string, List<Programme>>> LoadAsync(string url, bool force = false)
     {
-        if (Cache.TryGetValue(url, out var cached)) return cached;
-        var bytes = await Http.Client.GetByteArrayAsync(url);
+        if (!force && Cache.TryGetValue(url, out var cached)) return cached;
+
+        var key = "epg:" + url;
+        var bytes = force ? null : DiskCache.Read(key, MaxAge);
+        if (bytes == null)
+        {
+            try
+            {
+                bytes = await Http.GetBytesAsync(url);
+                DiskCache.Write(key, bytes);
+            }
+            catch
+            {
+                bytes = DiskCache.ReadAny(key);
+                if (bytes == null) throw;
+            }
+        }
+
         var result = await Task.Run(() => Parse(bytes));
         Cache[url] = result;
         return result;
     }
+
+    /// <summary>Drops the in-memory copy (used by tests and when a playlist is removed).</summary>
+    public static void Forget(string url) => Cache.TryRemove(url, out _);
 
     internal static Dictionary<string, List<Programme>> Parse(byte[] bytes)
     {
