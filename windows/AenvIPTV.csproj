@@ -12,6 +12,10 @@
     <SelfContained>false</SelfContained>
     <ApplicationIcon>Assets\AenvIPTV.ico</ApplicationIcon>
 
+    <!-- The app is x64 only: ship just the 64-bit VLC libraries (saves ~40 MB) -->
+    <VlcWindowsX64Enabled>true</VlcWindowsX64Enabled>
+    <VlcWindowsX86Enabled>false</VlcWindowsX86Enabled>
+
     <!-- Shown in the file properties -->
     <Version>1.0.0</Version>
     <Product>AENV IPTV</Product>

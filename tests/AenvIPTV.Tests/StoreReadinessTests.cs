@@ -194,6 +194,15 @@ public class StoreReadinessTests
     }
 
     [Fact]
+    public void Only_64_bit_vlc_libraries_are_shipped()
+    {
+        // The manifest and installer are x64-only; 32-bit VLC would add ~40 MB for nothing
+        var csproj = File.ReadAllText(Path.Combine(Win, "AenvIPTV.csproj"));
+        Assert.Contains("<VlcWindowsX86Enabled>false</VlcWindowsX86Enabled>", csproj);
+        Assert.Contains("<RuntimeIdentifier>win-x64</RuntimeIdentifier>", csproj);
+    }
+
+    [Fact]
     public void Versions_are_consistent()
     {
         var csproj = File.ReadAllText(Path.Combine(Win, "AenvIPTV.csproj"));
