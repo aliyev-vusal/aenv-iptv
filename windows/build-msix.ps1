@@ -37,8 +37,10 @@ if ($LASTEXITCODE -ne 0) { throw "dotnet publish failed." }
 Write-Host "`n[2/4] Writing manifest and assets..." -ForegroundColor Cyan
 Copy-Item packaging\Assets (Join-Path $layout "Assets") -Recurse
 $manifest = Get-Content packaging\AppxManifest.xml -Raw
-$manifest = $manifest.Replace('$IDENTITY_NAME$', $IdentityName).Replace('$PUBLISHER$', [Security.SecurityElement]::Escape($Publisher)) `
-                     .Replace('$PUBLISHER_DISPLAY_NAME$', [Security.SecurityElement]::Escape($PublisherDisplayName)).Replace('$VERSION$', $msixVersion)
+$manifest = $manifest.Replace('$IDENTITY_NAME$', $IdentityName)
+$manifest = $manifest.Replace('$PUBLISHER_DISPLAY_NAME$', [Security.SecurityElement]::Escape($PublisherDisplayName))
+$manifest = $manifest.Replace('$PUBLISHER$', [Security.SecurityElement]::Escape($Publisher))
+$manifest = $manifest.Replace('$VERSION$', $msixVersion)
 Set-Content -Path (Join-Path $layout "AppxManifest.xml") -Value $manifest -Encoding UTF8
 
 if ($Register) {
